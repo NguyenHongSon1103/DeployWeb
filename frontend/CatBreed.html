@@ -12,6 +12,44 @@
 	<link href="css/all.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="css/style.css" rel="stylesheet">
+	<style>
+		.button{
+			margin-left: 20%;
+			margin-top: 5%;
+		}
+		h3{
+			font-size: 34px;
+			font-weight: 700 !important;
+		}
+		img{
+			width: 70%;
+			height: 70%;
+			margin-left: 15%;
+		}
+		.input{
+			border-radius: 8px;
+			width: 50%;
+			background-color: rgb(226, 226, 247);
+			height: 80%;
+		}
+		.result{
+			margin-top: 20%;
+			margin-bottom: 10%;
+		}
+		.img_default{
+			margin-top: 10%;
+			margin-left: 20%;
+			max-height: 400px;
+		}
+		.bn{
+			margin-top: 10px;
+			height: 90%;
+		}
+		label{
+			font-size: 20px;
+			font-weight: 500;
+		}
+	</style>
 </head>
 <body>
 <div class="wrapper-main">
@@ -91,8 +129,106 @@
 	Chèn giao diện mới vào vị trí này
 	-->
 	<form class="">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					
+					<br>
+					<div class="row">
+						<div class="col-md-6 left-ab">
+							<h3>Mô Tả</h3>
+							<p>Mèo từ lâu đã luôn là người bạn thân thiết của con người.Trong xã hội hiện đại,
+								nhu cầu nuôi mèo làm vật nuôi lại càng tăng cao.Số lượng người yêu mèo ngày càng một lớn.
+							</p>
+							<p>
+								Đi kèm với nhu cầu trên, thì việc tìm hiểu các giống mèo cũng là một vấn đề nan giải. Để 
+								tìm được một chú mèo ưng ý không phải là việc dễ dàng.HIện nay đa phần các bạn trẻ hay tìm nuôi 
+								mèo trên các mạng xã hội, nơi mà hầu hết chỉ gồm các bức ảnh về những con mèo mà ít có các thông tin đi
+								kèm.
+							</p>
+							<P>Sản phẩm này của chúng ta sẽ giúp các bạn giải quyết được vấn đề đấy</P>
+						</div>
+						<div class="col-md-6 right-ab">
+							<img class="img-fluid rounded mb-4" src="images/vision-img.jpg" alt="" />
+						</div>
+					</div>
+					<br>
+					
+					<br>
+					<div class="row">
 
+						<div class="col-md-6 left-ab">
+							<img class="img-fluid rounded mb-4" src="images/vision-img.jpg" alt="" />
+						</div>
+						<div class="col-md-6 right-ab">
+							<h3>Tính Năng</h3>
+							<br>
+							<p><b>Multitask-Classifier for Breeds, Ages, Genders of Cat:</b> Phân loại Giống, tuổi và giới tính của loài mèo
+							</p>
+							<p>
+								Hãy upload bức ảnh của bạn. Chúng tôi sẽ đưa ra các thông tin về giống, độ tuổi và giới tính của chú mèo.
+								
+							</p>
+
+						</div>
+					</div>
+					<br>
+					<h3 style="text-align:center">Trải Nghiệm</h3>
+					<br>
+					<div class="row" style="border:1px solid #e6e6e6;border-radius: 8px;">
+						<div class="col-md-6 left-ab">
+							<div>
+								<img id="blah" class="img_default" src="images/vision-img.jpg" alt="your image" />
+							</div>
+							<div class="button">
+								<input type="file" class="btn btn-danger bn" value="Upload" onchange="readURL(this);" />
+								<input class="btn btn-success bn" type="submit" value="Submit">
+								<input class="btn btn-primary bn" type="reset" value="Reset">
+							</div>
+							
+							<br>
+						</div>
+						<div class="col-md-1"></div>
+						<div class="col-md-5 right-ab">
+							<div class="result">
+								<h3>Kết quả</h3>
+								<br>
+								<div class="row">
+									<div class="col-md-3">
+										<label>Giống:</label>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control input" id="breed">
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-3">
+										<label>Độ tuổi:</label>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control input" id="breed">
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-3">
+										<label>Giới tính:</label>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control input" id="breed">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
 	</form>
+
 
     <!-- /.container -->
     <!--footer starts from here-->
@@ -136,5 +272,19 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="js/jquery.appear.js"></script>
 <script src="js/script.js"></script>
+<script type="text/javascript">
+	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah')
+					.attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 </body>
 </html>
