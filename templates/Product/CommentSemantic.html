@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <style>
+			textarea {
+				width: 70% !important;
+				height: 50%;
+				margin-top: 10%;
+				margin-left: 20%;
+				background-image: -webkit-linear-gradient(left, #fff, transparent 0), -webkit-linear-gradient(right, #fff, transparent 0), -webkit-linear-gradient(#fff 30px, #ccc 0, #ccc 0, #fff 31px);
+				background-size: 100% 100%, 100% 100%, 100% 31px;
+				border-radius: 8px;
+				line-height: 31px;
+				font-family: Helvetica, OpenSans, sans-serif;
+				border: none;
+				outline: none;
+				resize: none;
+				font-size: 16px;
+				font-weight: 500;
+				color: #47494b;
+				text-align: justify;
+			}
+			.button{
+				margin-left: 20%;
+				margin-top: 5%;
+			}
+			img{
+				width: 70%;
+				height: 70%;
+				margin-left: 15%;
+			}
+			h3{
+				font-size: 34px;
+				font-weight: 700 !important;
+			}
+
+    </style>
+</head>
+<body>
+{% include 'header.html' %}
+<div class="wrapper-main">
+    <!-- full Title -->
+    <div class="full-title">
+        <div class="container">
+            <!-- Page Heading/Breadcrumbs -->
+            <h1 class="mt-4 mb-3"> Comment's Semantic </h1>
+            <div class="breadcrumb-main">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{url_for('main')}}">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active"> Comment's Semantic</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Layout -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <div class="row">
+                    <div class="col-md-6 left-ab">
+                        <h3>Mô Tả</h3>
+                        <p>Cùng với sự bùng nổ của Internet và kết nối toàn cầu, nhu cầu giao lưu online giữa
+                            người với người
+                            ngày một tăng lên.Mạng xã hội, các trang báo, xem phim trực tuyến ngày càng nhiều để
+                            phục vụ nhu cầu đó.
+                        </p>
+                        <p>
+                            Hình thức phổ biến và tiện dụng nhất để nói chuyện với nhau qua Internet chính là
+                            các tin nhắn, câu bình luận (conment).
+                            Và tất nhiên, vì chỉ là những câu văn bản vô tri, nên chúng ta nhiều lúc gặp khó
+                            khăn để hiểu được cảm xúc của đối phương phía bên kia
+                            màn hình.
+                        </p>
+                        <P>Sản phẩm này của chúng ta sẽ giúp các bạn giải quyết được vấn đề đấy</P>
+                    </div>
+                    <div class="col-md-6 right-ab">
+                        <img class="img-fluid rounded mb-4" src="{{url_for('static',filename='images/vision-img.jpg')}}"
+                             alt=""/>
+                    </div>
+                </div>
+                <br>
+
+                <br>
+                <div class="row">
+                    <div class="col-md-6 left-ab">
+                        <img class="img-fluid rounded mb-4" src="{{url_for('static',filename='images/vision-img.jpg')}}"
+                             alt=""/>
+                    </div>
+                    <div class="col-md-6 right-ab">
+                        <h3>Tính Năng</h3>
+                        <br>
+                        <p><b>Comment's Semantic Classifier:</b> Phân loại sắc thái bình luận, xem xét một bình
+                            luận mang ý nghĩa tích cực hay tiêu cực
+                        </p>
+                        <p>
+                            Bạn chỉ cần điền nội dung câu bình luận vào ô trống dưới đây, chúng tôi sẽ phân tích
+                            sắc thái câu bình luận giúp bạn. Từ đó bạn
+                            có thể nắm bắt đối phương một cách hiệu quả hơn.
+                        </p>
+                    </div>
+                </div>
+                <form class="form-control" id="fmSubmit" method="post">
+                    <br>
+                    <h3 style="text-align:center">Trải Nghiệm</h3>
+                    <br>
+                    <div class="row" style="border:1px solid #e6e6e6;border-radius: 8px;">
+                        <div class="col-md-6 left-ab">
+                            <div>
+                                <textarea placeholder="Nhập nội dung để trải nghiệm" id="edit-content"
+                                          maxlength="100"
+                                          style="overflow: hidden; overflow-wrap: break-word; height: 250px;"></textarea>
+                            </div>
+                            <div class="button">
+                                <input class="btn btn-success" type="button" value="Submit" id="btnSubmit">
+                                <input class="btn btn-primary" type="reset" value="Reset">
+                            </div>
+
+                            <br>
+                        </div>
+                        <div class="col-md-6 right-ab">
+                            <br><br>
+                            <div>
+                                <h4><strong>Result</strong></h4>
+                                <br>
+                            </div>
+                            <div id="divResult">
+
+                            </div>
+                            <div>
+                                <h4>Bạn có hài lòng với kết quả này không ?</h4>
+                                <a href="#"><i class="far fa-smile fa-3x"></i></a> <a href="#"><i
+                                    class="far fa-frown fa-3x"></i></a>
+                            </div>
+                            <div>
+                                <p hidden> Cảm ơn bạn đã dùng thử ứng dụng ! </p>
+                                <input type="text" name="txtComment" id="txtComment" class="form-control" hidden>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{url_for('static',filename='js/custom.js')}}"></script>
+
+{% include 'footer.html' %}
+</body>
+</html>
