@@ -2,24 +2,28 @@ from flask import Flask
 from flask import render_template, request, Response, json
 from Models.CommentSemantic import CommentSemantic
 from Models import ultis
+from time import time
 
 SERVER_NAME = 'http://localhost:5000'
 app = Flask(__name__)
 
 
-CSModel = CommentSemantic.CommentSemantic(ultis.encode_model_path, ultis.model_path)
+CSModel = CommentSemantic.CommentSemantic()
 
 
 @app.route("/runCommentSemantic", methods=['POST'])
 def runCommentSemantic():
+    s = time()
     comment = request.form['comment']
-    prediction = CSModel.predict(comment)
+    prediction, conf = CSModel.predict(comment, mode='nn')
     respond_dict = dict()
     if prediction is None:
-        respond_dict['prediction'] = -1
+        respond_dict['prediction'] = '-1'
     else:
-        prediction = prediction[0]
-        respond_dict['prediction'] = prediction
+        respond_dict['prediction'] = str(prediction)
+        respond_dict['confidence'] = str(conf)
+    e = time()
+    respond_dict['exetime'] = "%.4f"%(e-s)
     return Response(json.dumps(respond_dict), status=201)
 
 

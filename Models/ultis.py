@@ -2,9 +2,6 @@ import cv2
 import base64
 import numpy as np
 
-encode_model_path = 'Models/CommentSemantic/w2v_model.model'
-model_path = 'Models/CommentSemantic/SVM_model.sav'
-
 
 def encode_np_array(image):
     ''' images: list of RGB images '''
