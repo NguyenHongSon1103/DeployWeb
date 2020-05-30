@@ -1,0 +1,39 @@
+#breeds
+American Bobtail - Mèo đuôi cụt Mỹ
+American Shorthair - Mèo Mỹ lông ngắn
+Bengal
+Bombay 
+British Shorthair - Mèo Anh lông ngắn
+Calico - Mèo tam thể
+Dilute Calico
+Dilute Tortoiseshell
+Domestic Long Hair - Mèo nhà lông dài
+Domestic Medium Hair - Mèo nhà lông vừa
+Domestic Short Hair - Mèo nhà lông ngắn
+Toes Cat
+Himalayan
+Maine Coon - Mèo lông dài Mỹ
+Manx
+Norwegian Forest Cat - Mèo rừng Na Uy
+Oriental Long Hair - Mèo lông dài Phương Đông
+Persian - Mèo Ba Tư
+Ragdoll
+Russian Blue - Mèo Nga mắt xanh
+Siamese - Mèo Xiêm
+Snowshoe - Mèo tất trắng
+Sphynx - Mèo không lông
+Tabby - Mèo mướp
+Tiger
+Torbie - Mèo đồi mồi 
+Tortoiseshell
+Turkish Angora - Mèo Angora Thổ Nhĩ Kỳ
+Turkish Van - Mèo Van Thổ Nhĩ Kỳ
+Tuxedo
+#ages
+Senior - > 5 tuổi
+Adult - 1 tuổi - 5 tuổi
+Young - 5 tháng - 1 tuổi
+Baby - < 5 tháng
+#genders
+Male - Con đực
+Female - Con cái

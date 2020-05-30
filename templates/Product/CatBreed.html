@@ -109,47 +109,19 @@
 							<div class="row" style="border:1px solid #e6e6e6;border-radius: 8px;">
 								<div class="col-md-6 left-ab">
 									<div>
-										<img id="blah" class="img_default" src="images/vision-img.jpg" alt="your image" />
+										<img id="imgUpload" class="img_default" src="images/vision-img.jpg" alt="your image" />
 									</div>
 									<div class="button">
 										<input type="file" class="btn btn-danger bn" value="Upload" onchange="readURL(this);" />
-										<input class="btn btn-success bn" type="submit" value="Submit">
+										<input class="btn btn-success bn" type="button" value="Submit" id="btnSubmit">
 										<input class="btn btn-primary bn" type="reset" value="Reset">
 									</div>
 
 									<br>
 								</div>
-								<div class="col-md-1"></div>
-								<div class="col-md-5 right-ab">
+								<div class="col-md-6 right-ab">
 									<div class="result">
-										<h3>Kết quả</h3>
-										<br>
-										<div class="row">
-											<div class="col-md-3">
-												<label>Giống:</label>
-											</div>
-											<div class="col-md-9">
-												<input type="text" class="form-control input" id="breed">
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-md-3">
-												<label>Độ tuổi:</label>
-											</div>
-											<div class="col-md-9">
-												<input type="text" class="form-control input" id="age">
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-md-3">
-												<label>Giới tính:</label>
-											</div>
-											<div class="col-md-9">
-												<input type="text" class="form-control input" id="gender">
-											</div>
-										</div>
+										<h3 id="h3result">Kết quả</h3>
 									</div>
 								</div>
 							</div>
@@ -161,19 +133,6 @@
 			</form>
 		</div>
 		{% include 'footer.html' %}
-		<script type="text/javascript">
-			function readURL(input) {
-				if (input.files && input.files[0]) {
-					var reader = new FileReader();
-
-					reader.onload = function (e) {
-						$('#blah')
-							.attr('src', e.target.result);
-					};
-
-					reader.readAsDataURL(input.files[0]);
-				}
-			}
-		</script>
+		<script type="text/javascript" src="../static/js/CBcustom.js"></script>
 	</body>
 </html>

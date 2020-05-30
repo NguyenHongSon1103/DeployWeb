@@ -1,31 +1,52 @@
 from flask import Flask
 from flask import render_template, request, Response, json
 from Models.CommentSemantic import CommentSemantic
+from Models.CatBreeds import CatBreedModel
 from Models import ultis
+from time import time
 
 SERVER_NAME = 'http://localhost:5000'
 app = Flask(__name__)
 
 
-CSModel = CommentSemantic.CommentSemantic(ultis.encode_model_path, ultis.model_path)
+CSModel = CommentSemantic.CommentSemantic()
+CBModel = CatBreedModel.CatBreedModel()
 
 
 @app.route("/runCommentSemantic", methods=['POST'])
 def runCommentSemantic():
+    s = time()
     comment = request.form['comment']
-    prediction = CSModel.predict(comment)
+    prediction, conf = CSModel.predict(comment, mode='nn')
     respond_dict = dict()
     if prediction is None:
-        respond_dict['prediction'] = -1
+        respond_dict['prediction'] = '-1'
     else:
-        prediction = prediction[0]
-        respond_dict['prediction'] = prediction
+        respond_dict['prediction'] = str(prediction)
+        respond_dict['confidence'] = str(conf)
+    e = time()
+    respond_dict['exetime'] = "%.4f"%(e-s)
     return Response(json.dumps(respond_dict), status=201)
 
 
-# @app.route("/commentSemantic/view",methods=["GET"])
-# def view():
-#     return render_template("classifyFace.html")
+@app.route("/runBreedsCat",methods=["POST"])
+def runBreedsCat():
+    s = time()
+    image = request.form['image'][23:]
+    #print('ảnh: ', image)
+    image = ultis.read_image(image)
+    boxes, breeds, ages, genders = CBModel.predict(image)
+    response_dict = dict()
+    if boxes is None:
+        response_dict['status'] = 'nocat'
+    else:
+        response_dict['status'] = 'cat'
+        for i in range(len(boxes)):
+            response_dict['predictions'] = {'box': ultis.encode_np_array(boxes[i]), 'breed':breeds[i],
+                                                   'age': ages[i], 'gender': genders[i]}
+    e = time()
+    response_dict['exetime'] = '%.4f'%(e-s)
+    return Response(json.dumps(response_dict), status=201)
 
 
 @app.route('/')

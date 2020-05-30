@@ -3,13 +3,18 @@ from nltk import word_tokenize
 from sklearn.svm import SVC
 from gensim.models import Word2Vec
 import joblib
+from keras import models
+import tensorflow as tf
 
 
 class CommentSemantic:
-    def __init__(self, encode_model_path, model_path):
-        self.w2v = Word2Vec.load(encode_model_path)
-        self.svm_model = joblib.load(model_path)
+    def __init__(self):
+        self.w2v = Word2Vec.load('Models/CommentSemantic/w2v_model.model')
+        self.svm_model = joblib.load('Models/CommentSemantic/SVM_model.sav')
+        self.nn_model = models.load_model('Models/CommentSemantic/CCSBest_model_v2.h5')
         self.remove = ['(', ')', '^', '"', '?', '!', '.', '❤️', ':', 'T^T']
+        self.nn_model._make_predict_function()
+        self.graph = tf.get_default_graph()
 
     def __processing_data(self, data):
         w_t = []
@@ -35,12 +40,23 @@ class CommentSemantic:
             sents_emd.append(result)
         return sents_emd
 
-    def predict(self, data):
+    def predict(self, data, mode='svm'):
         data_processed = self.__processing_data(data)
         data_processed = np.array(data_processed)
         if data_processed.shape[-1] == 1:
             print("Some thing wrong!")
             return None
         embedding_vector = self.__embedding(data_processed)
-        predictions = self.svm_model.predict(embedding_vector)
-        return predictions
+        if mode == 'svm':
+            label = self.svm_model.predict(embedding_vector)[0]
+            conf = -1
+        else:
+            # embedding_vector = np.transpose(embedding_vector)
+            # embedding_vector = embedding_vector.squeeze(axis= 1)
+            #embedding_vector = np.expand_dims(embedding_vector, axis=0)
+            embedding_vector = np.reshape(embedding_vector, (1, 300,))
+            with self.graph.as_default():
+                predictions = self.nn_model.predict(embedding_vector)[0]
+            label = np.argmax(predictions)
+            conf = predictions[label]
+        return label, conf
