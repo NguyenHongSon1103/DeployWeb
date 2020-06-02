@@ -8,7 +8,6 @@ from time import time
 SERVER_NAME = 'http://localhost:5000'
 app = Flask(__name__)
 
-
 CSModel = CommentSemantic.CommentSemantic()
 CBModel = CatBreedModel.CatBreedModel()
 
@@ -17,7 +16,7 @@ CBModel = CatBreedModel.CatBreedModel()
 def runCommentSemantic():
     s = time()
     comment = request.form['comment']
-    prediction, conf = CSModel.predict(comment, mode='nn')
+    prediction, conf = CSModel.predict(comment, mode='svm')
     respond_dict = dict()
     if prediction is None:
         respond_dict['prediction'] = '-1'
@@ -25,27 +24,28 @@ def runCommentSemantic():
         respond_dict['prediction'] = str(prediction)
         respond_dict['confidence'] = str(conf)
     e = time()
-    respond_dict['exetime'] = "%.4f"%(e-s)
+    respond_dict['exetime'] = "%.4f" % (e - s)
     return Response(json.dumps(respond_dict), status=201)
 
 
-@app.route("/runBreedsCat",methods=["POST"])
+@app.route("/runBreedsCat", methods=["POST"])
 def runBreedsCat():
     s = time()
     image = request.form['image'][23:]
-    #print('ảnh: ', image)
+    # print('ảnh: ', image)
     image = ultis.read_image(image)
-    boxes, breeds, ages, genders = CBModel.predict(image)
+    crops, breeds, ages, genders = CBModel.predict(image)
     response_dict = dict()
-    if boxes is None:
+    if crops is None:
         response_dict['status'] = 'nocat'
     else:
         response_dict['status'] = 'cat'
-        for i in range(len(boxes)):
-            response_dict['predictions'] = {'box': ultis.encode_np_array(boxes[i]), 'breed':breeds[i],
-                                                   'age': ages[i], 'gender': genders[i]}
+        response_dict['count'] = len(crops)
+        for i, crop in enumerate(crops):
+            response_dict['prediction_' + str(i)] = {'box': ultis.encode_np_array(crop), 'breed': breeds[i],
+                                                     'age': ages[i], 'gender': genders[i]}
     e = time()
-    response_dict['exetime'] = '%.4f'%(e-s)
+    response_dict['exetime'] = '%.4f' % (e - s)
     return Response(json.dumps(response_dict), status=201)
 
 

@@ -8,10 +8,10 @@ from Models.SSD_Mobilenetv2.detect import Detector
 def load_names():
     with open('Models/CatBreeds/labels-breed.txt', 'r',encoding="UTF-8") as f:
         lines = f.readlines()
-    # 0, 31, 36 is content
-    breeds = [lines[i][:-1] for i in range(1, 31)]
-    ages = [lines[i][-1] for i in range(32, 36)]
-    genders = [lines[i][-1] for i in range(37, 39)]
+    lines = [line[:-1] for line in lines]
+    breeds = [lines[i] for i in range(1, 31)]
+    ages = [lines[i] for i in range(32, 36)]
+    genders = [lines[i] for i in range(37, 39)]
     return breeds, ages, genders
 
 
@@ -25,26 +25,30 @@ class CatBreedModel:
 
     def predict(self, image):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        h, w = image.shape[:2]
         boxes = self._detect_model_.detect(image)
         if len(boxes) == 0:
             print("Cannot find any cat !")
             return None, None, None, None
         inputs = []
-        for box in boxes:
-            x1, y1, x2, y2 = box
-            img = image[y1:y2, x1:x2] #Chỗ này có vấn đề gì đó ?
+        crops = []
+        for i, box in enumerate(boxes):
+            y1, x1, y2, x2 = int(box[0]*h), int(box[1]*w),int(box[2]*h), int(box[3]*w)
+            img = image[y1:y2, x1:x2]
             img = cv2.resize(img, (224,224))
-            img /= 255.0
+            crops.append(img)
+            img = np.array(img, dtype=float) / 255.0
             inputs.append(img)
+        inputs = np.array(inputs)
         with self.__graph__.as_default():
-            predictions = self.__model__.predict(image)
-
+            predictions = self.__model__.predict(inputs)
         breeds, ages, genders = [], [], []
-        for pred in predictions:
-            breeds.append(self.__breeds__[int(np.argmax(pred[0]))])
-            ages.append(self.__ages__[int(np.argmax(pred[1]))])
-            genders.append(self.__genders__[int(np.argmax(pred[2]))])
-        return inputs, breeds, ages, genders
+        breeds_out, ages_out, genders_out = predictions
+        for breed_out, age_out, gender_out in zip(breeds_out, ages_out, genders_out):
+            breeds.append(self.__breeds__[int(np.argmax(breed_out))])
+            ages.append(self.__ages__[int(np.argmax(age_out))])
+            genders.append(self.__genders__[int(np.argmax(gender_out))])
+        return crops, breeds, ages, genders
 
 
 

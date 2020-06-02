@@ -18,8 +18,7 @@ $('#btnSubmit').click(function(){
     //console.log(image);
     var data = new FormData();
     data.append('image',image);
-
-     $.ajax({
+    $.ajax({
         type: 'POST',
         url: "/runBreedsCat",
         processData:false,
@@ -35,22 +34,25 @@ $('#btnSubmit').click(function(){
                 div_result.append("<div>No cat found in this image !</div>");
                 return;
             }
-            var predicts = json['predictions'];
-            var index = 1;
-            for(var pred in predicts)
+            var count = Number(json['count']);
+            for(var i = 0; i < count; i++)
             {
+                var pred = json['prediction_'+ i];
                 var template =  '<div class="row">' +
-                                '<div class="col-md-5">' +
-								'	<img src="data:image/jpg;base64"' + '"{{pred[\'base64_encode\']}}" alt="img"></div>' +
-								'<div class="col-md-3">' +
-								'	<label>Giống: "{{pred[\'breed\']}}"</label></div>' +
-								'<div class="col-md-2">' +
-								'	<label>Tuổi: "{{pred["age"]}}"</label></div>' +
-								'<div class="col-md-2">' +
-								'	<label>Giới tính: "{{pred["gender"]}}"</label></div>';
+                                    '<div class="col-md-5">' +
+                                    '	<img src="data:image/jpeg;base64,' + pred['box'] + '" alt="img"></div>' +
+                                    '<div class="col-md-7">' +
+                                    '	<pre>Giống:' + pred["breed"] + '<br>' +
+                                             'Tuổi:' + pred["age"] + '<br>' +
+                                             'Giới tính:' + pred["gender"] +
+                                        '</pre>' +
+                                    '</div>' +
+                                '</div>';
                 div_result.append(template);
             }
-            div_result.append("<div>Thời gian thực hiện: '{{json[\"exetime\"}}'</div>");
+
+            var index = 1;
+            div_result.append("<div>Thời gian thực hiện:" + json["exetime"] + "</div>");
             div_result.append("<div>Số lần chạy:" + index + "</div>");
             index += 1;
         },

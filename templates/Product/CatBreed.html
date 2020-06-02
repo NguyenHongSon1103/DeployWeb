@@ -40,7 +40,10 @@
 			}
 		</style>
 	</head>
-	<body>
+	<body class="preloading">
+		<div class="loader">
+      		<span class="fas fa-spinner xoay icon"></span>
+   		</div>
 		{% include 'header.html' %}
 		<div class="wrapper-main">
 			<!-- full Title -->
@@ -80,7 +83,7 @@
 									<P>Sản phẩm này của chúng ta sẽ giúp các bạn giải quyết được vấn đề đấy</P>
 								</div>
 								<div class="col-md-6 right-ab">
-									<img class="img-fluid rounded mb-4" src="images/vision-img.jpg" alt="" />
+									<img class="img-fluid rounded mb-4" src="../static/images/vision-img.jpg" alt="" />
 								</div>
 							</div>
 							<br>
@@ -89,7 +92,7 @@
 							<div class="row">
 
 								<div class="col-md-6 left-ab">
-									<img class="img-fluid rounded mb-4" src="images/vision-img.jpg" alt="" />
+									<img class="img-fluid rounded mb-4" src="../static/images/vision-img.jpg" alt="" />
 								</div>
 								<div class="col-md-6 right-ab">
 									<h3>Tính Năng</h3>
@@ -109,19 +112,19 @@
 							<div class="row" style="border:1px solid #e6e6e6;border-radius: 8px;">
 								<div class="col-md-6 left-ab">
 									<div>
-										<img id="imgUpload" class="img_default" src="images/vision-img.jpg" alt="your image" />
+										<img id="imgUpload" class="img_default" src="../static/images/vision-img.jpg" alt="your image" />
 									</div>
 									<div class="button">
 										<input type="file" class="btn btn-danger bn" value="Upload" onchange="readURL(this);" />
 										<input class="btn btn-success bn" type="button" value="Submit" id="btnSubmit">
 										<input class="btn btn-primary bn" type="reset" value="Reset">
 									</div>
-
 									<br>
 								</div>
 								<div class="col-md-6 right-ab">
 									<div class="result">
-										<h3 id="h3result">Kết quả</h3>
+										<h4 style="text-align: center">Kết quả</h4>
+										<h5 id="h3result"></h5>
 									</div>
 								</div>
 							</div>
