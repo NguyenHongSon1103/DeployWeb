@@ -11,7 +11,7 @@ function readURL(input) {
     }
 }
 
-index = 0
+var index = 1;
 $('#btnSubmit').click(function(){
 
     var image = $('#imgUpload').attr('src');
@@ -50,8 +50,6 @@ $('#btnSubmit').click(function(){
                                 '</div>';
                 div_result.append(template);
             }
-
-            var index = 1;
             div_result.append("<div>Thời gian thực hiện:" + json["exetime"] + "</div>");
             div_result.append("<div>Số lần chạy:" + index + "</div>");
             index += 1;

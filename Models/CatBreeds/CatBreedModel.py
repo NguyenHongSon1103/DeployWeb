@@ -2,7 +2,7 @@ from keras import models
 import numpy as np
 import cv2
 import tensorflow as tf
-from Models.SSD_Mobilenetv2.detect import Detector
+from Models.SSD_Mobilenetv2.detect_cat import Detector
 
 
 def load_names():
